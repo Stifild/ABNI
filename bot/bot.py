@@ -1,8 +1,10 @@
 def main():
     from telebot import types, TeleBot, util
     from configs.config import TOKEN, admins_id, channel_id
+    from IOP.iop import IOP
     import schedule
 
+    io = IOP()
     bot = TeleBot(TOKEN)
 
     @bot.message_handler(commands=['save_channel'])
@@ -17,7 +19,7 @@ def main():
     def send_message_to_channel(message):
         bot.send_message(channel_id, message)
 
-    schedule.every().day.at("12:00").do(send_message_to_channel, "Good morning!")
+    schedule.every().day.at("12:00").do(send_message_to_channel, io.get_message())
     bot.infinity_polling()
     
 
